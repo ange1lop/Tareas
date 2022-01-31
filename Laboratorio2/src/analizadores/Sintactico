@@ -1,0 +1,90 @@
+/*
+ * Ejemplo desarrollado por Erick Navarro
+ * Blog: e-navarro.blogspot.com
+ * Julio - 2018
+ */
+
+package analizadores; 
+import java_cup.runtime.*;
+
+parser code 
+{:
+    /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+    } 
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        " no reconocido."); 
+    }  
+
+    public void mostrar(String out) {
+        System.out.println(out);
+    }
+
+    public int getVal(String num) {
+        return Integer.parseInt(num);
+    }
+:} 
+
+terminal String PUNTO, CERO, UNO;
+
+non terminal Nodo ini;
+non terminal Nodo listaA, deA,listas;
+
+start with ini; 
+
+ini ::=
+    listas:L    {: mostrar("El numero es " + L.cad); :}
+    ;
+
+listas ::=
+        listaA:L1 PUNTO listaA:A         {:
+                                    L1.aux = L1.cont+L1.val;
+                                    L1.cad = ""+L1.aux;
+                                    RESULT = L1;
+                                :}
+    |   listaA:A                   {: 
+                                    A.cad = ""+A.cont;
+                                    RESULT = A; :}
+    ;
+
+listaA ::=
+        listaA:L1 deA:B         {:
+                                    L1.cont = L1.cont * 2+B.cont;
+                                    L1.aux = L1.aux/2;
+                                    L1.val = L1.val + B.val*L1.aux;
+                                    RESULT = L1;
+                                :}
+    |   deA:A                   {:  
+                                    A.aux = 0.5;
+                                    A.val = A.aux*A.val;
+                                    RESULT = A;
+                                :}
+    ;
+
+deA ::=
+        CERO        {:
+                                    Nodo nodo = new Nodo();
+                                    nodo.cont = 0;
+                                    nodo.aux =0;
+                                    nodo.val = 0;
+                                    RESULT = nodo;
+                                :}
+    |   UNO                   {:
+                                    Nodo nodo = new Nodo();
+                                    nodo.aux =0;
+                                    nodo.cont = 1;
+                                    nodo.val = 1;
+                                    RESULT = nodo;
+                                :}
+    ;

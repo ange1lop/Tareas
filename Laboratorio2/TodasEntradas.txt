@@ -1,0 +1,12 @@
+a ((a))				Cantidad de pares de paréntesis es 2
+(a) (((((a)))))			Cantidad de pares de paréntesis es 6
+
+4; 6; 2				12
+3, a, c, 4, t, l, m, 5, d	3, a, c, 4, t, l, m, 5, d
+4; 2; 3, c, 3; 2, f, 1		9, c, 5, f, 1
+
+101 		Salida: 5 
+0		Salida: 0 
+10101010	Salida: 170 
+01		Salida: 1 
+110011		Salida: 51 
