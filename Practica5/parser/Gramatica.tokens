@@ -1,0 +1,15 @@
+MAS=1
+MEN=2
+POR=3
+DIV=4
+PARI=5
+PARD=6
+NUM=7
+ID=8
+WHITESPACE=9
+'+'=1
+'-'=2
+'*'=3
+'/'=4
+'('=5
+')'=6
